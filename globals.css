@@ -106,30 +106,6 @@ body {
   margin-bottom: 32px;
 }
 
-/* Make hero a stacking context */
-.hero {
-  position: relative;
-  z-index: 0;
-}
-
-/* Hero background layer */
-.home-bg {
-  position: relative;
-  z-index: 0;
-}
-
-/* Floating effects ABOVE background */
-.floating-container {
-  z-index: 2; /* 👈 was 1 */
-}
-
-/* Text ABOVE effects */
-.hero * {
-  position: relative;
-  z-index: 5;
-}
-
-
 /* ========================= */
 /* ⏳ COUNTDOWN (NEW – IMPORTANT) */
 /* ========================= */
@@ -453,72 +429,3 @@ body {
     gap: 14px;
   }
 }
-
-
-
-
-
-/* ========================= */
-/* FLOATING EFFECTS */
-/* ========================= */
-
-.floating-container {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 2;
-}
-
-.floating {
-  position: absolute;
-  bottom: -40px;
-  opacity: 0.55;
-
-  animation-duration: 18s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-fill-mode: both;
-}
-
-.floating.heart {
-  animation-name: floatUp;
-}
-
-.floating.butterfly {
-  animation-name: floatButterfly;
-  opacity: 0.45;
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(0.85);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.55;
-  }
-  100% {
-    transform: translateY(-120vh) scale(1.05);
-    opacity: 0;
-  }
-}
-
-@keyframes floatButterfly {
-  0% {
-    transform: translate(0, 0);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.45;
-  }
-  50% {
-    transform: translate(30px, -60vh);
-  }
-  100% {
-    transform: translate(-30px, -120vh);
-    opacity: 0;
-  }
-}
-
-
