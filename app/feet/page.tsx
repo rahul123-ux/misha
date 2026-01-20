@@ -6,7 +6,7 @@ export default function HairPage() {
   return (
     <FeaturePageWrapper
       image="/feet.jpeg"
-      title="Your hair ✨"
+      title="Your Feet ✨"
       subtitle="Your feet carry a quiet poetry of their own 🌸,
 gentle steps that leave warmth wherever they go.
 They’ve walked through moments of laughter and silence,
