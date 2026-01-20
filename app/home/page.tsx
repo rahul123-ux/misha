@@ -4,7 +4,7 @@ import FloatingEffects from "../../components/FloatingEffects";
 import { useEffect, useRef, useState } from "react";
 
 export default function HomePage() {
-  const FORCE_UNLOCK = true;
+  const FORCE_UNLOCK = false;
 
   const [mounted, setMounted] = useState(false);
   const [birthday, setBirthday] = useState<Date | null>(null);
