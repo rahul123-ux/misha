@@ -1,13 +1,32 @@
-"use client"
-import CatPageWrapper from "@/components/CatPageWrapper";
+"use client";
 
-export default function Cat1() {
+import { useRouter } from "next/navigation";
+
+export default function Home() {
+  const router = useRouter();
+
   return (
-    <CatPageWrapper
-      image="/cat1.gif"
-      title="Meow… who are you? 😼"
-      nextRoute="/cat2"
-      buttonText="Start the journey 🐾"
-    />
+    <main className="intro">
+      <h1 className="intro-title">
+        Hello Misha <span>💖</span>
+      </h1>
+
+      <p className="intro-text">
+        Let’s talk about you.
+        <br />
+        About the little things that make you…
+        <br />
+        <strong>so beautifully you.</strong>
+      </p>
+
+      <p className="intro-ready">ARE YOU READY?</p>
+
+      <button
+        className="intro-btn"
+        onClick={() => router.push("/hair")}
+      >
+        Let’s begin ✨
+      </button>
+    </main>
   );
 }

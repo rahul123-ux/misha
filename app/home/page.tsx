@@ -102,14 +102,20 @@ export default function HomePage() {
 
       {unlocked && (
         <section className="hero home-bg fade-in">
-          <div className="emoji-stack">💖 💗 💞 🦋 🦋</div>
+          <div className="emoji-stack">💖 💗 💞 🦋 ✨</div>
 
-          <h1 className="birthday-title">Happy Birthday, meri jaan</h1>
+          <h1 className="birthday-title">
+            Happy Birthday, meri jaan 🎂💕
+          </h1>
 
           <p className="birthday-text">
-            Today is all about celebrating you and the joy you bring to my life.
+            Today isn’t just your birthday —
+            it’s a celebration of the love, warmth,
+            and light you bring into my life.
             <br />
-            Thank you so much my love for coming into my life.
+            Thank you, my love, for choosing me
+            and for making my world more beautiful
+            just by being in it 🤍
           </p>
 
           {!entered && (
@@ -118,20 +124,60 @@ export default function HomePage() {
             </button>
           )}
         </section>
+
       )}
 
       {entered && (
         <>
           <section ref={galleryRef} className="gallery-section fade-in">
-            <h2 className="section-title">Our Memories 💞</h2>
+            <h2 className="section-title">Our Memories💞</h2>
+
+            <p className="gallery-subtitle">
+              Moments frozen in time, yet alive in my heart forever 🤍
+            </p>
 
             <div className="gallery-grid">
-              <img src="/mine.jpeg" alt="Memory 1" />
-              <img src="/i.jpeg" alt="Memory 2" />
-              <img src="love.jpeg" alt="Memory 3" />
-              <img src="/s.jpeg" alt="Memory 4" />
-              <img src="hand.jpeg" alt="Memory 5" />
-              <img src="/m.jpeg" alt="Memory 6" />
+              <div className="memory-card">
+                <img src="/mine.jpeg" alt="Us together" />
+                <p className="memory-text">
+                  That smile I fall for <br /> every single time 😊✨
+                </p>
+              </div>
+
+              <div className="memory-card">
+                <img src="/i.jpeg" alt="Your smile" />
+                <p className="memory-text">
+                  Two hands, one promise <br /> forever 🤝💍
+                </p>
+              </div>
+
+              <div className="memory-card">
+                <img src="/love.jpeg" alt="Love" />
+                <p className="memory-text">
+                  You, being effortlessly <br /> beautiful 🤍🌸
+                </p>
+              </div>
+
+              <div className="memory-card">
+                <img src="/s.jpeg" alt="You being you" />
+                <p className="memory-text">
+                  A memory I’ll carry <br /> in my heart always 💕
+                </p>
+              </div>
+
+              <div className="memory-card">
+                <img src="/hand.jpeg" alt="Holding hands" />
+                <p className="memory-text">
+                  Love, written quietly <br /> while you sit in my lap, safe and loved 💞
+                </p>
+              </div>
+
+              <div className="memory-card">
+                <img src="/m.jpeg" alt="A special memory" />
+                <p className="memory-text">
+                  The moment I realized <br /> you feel like home 🏡💖
+                </p>
+              </div>
             </div>
           </section>
 
@@ -140,24 +186,31 @@ export default function HomePage() {
               <h2>My Love 💖</h2>
 
               <p>
-                From the moment you came into my life, everything changed.
-                Your shoulder became my favorite place to rest.
+                From the moment you walked into my life, nothing stayed the same.
+                You became my calm in chaos, my home in every sense of the word.
+                Your shoulder is where my heart feels safe.
               </p>
 
               <p>
-                This gallery holds memories, but my heart holds you — today and
-                always.
+                This gallery may hold memories,
+                but my heart holds *you* —
+                every smile, every tear, every piece of who you are.
               </p>
 
               <p>
-                You are really really precious for me, i am too much possessive for you cause i dont want to loose you.
+                You are unimaginably precious to me.
+                If I hold you close, it’s not possession —
+                it’s fear of a world where I don’t get to love you.
+                I never want to lose you, not in any lifetime.
               </p>
 
               <p>
-                Gonna make you my bride someday.
+                One day, I won’t just promise forever —
+                I’ll stand beside you and make you my bride,
+                with the whole world watching and my heart choosing you again 💍✨
               </p>
 
-              <p className="signature">— Yours, forever 💕</p>
+              <p className="signature">— Yours, completely and endlessly 💕</p>
             </div>
           </section>
         </>

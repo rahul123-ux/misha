@@ -521,4 +521,156 @@ body {
   }
 }
 
+/* ========================= */
+/* 📱 BODY / FEATURE PAGES – MOBILE FIX */
+/* ========================= */
+@media (max-width: 768px) {
+  .fullscreen {
+    padding: 20px 16px;
+    justify-content: center;
+  }
+
+  .fullscreen img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+  }
+
+  .title {
+    font-size: 1.8rem;
+    margin-top: 16px;
+  }
+
+  .button {
+    width: 100%;
+    max-width: 280px;
+    padding: 14px 20px;
+    margin-top: 26px;
+  }
+}
+/* ========================= */
+/* ✨ "To know more" hint text */
+/* ========================= */
+.hint-text {
+  margin-top: 26px;
+  font-size: 0.9rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(122, 46, 74, 0.65);
+  position: relative;
+}
+
+/* Decorative line under text */
+.hint-text::after {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 2px;
+  margin: 8px auto 0;
+  background: linear-gradient(135deg, #ff6fae, #ff3d7f);
+  border-radius: 999px;
+}
+
+/* Mobile fine-tune */
+@media (max-width: 768px) {
+  .hint-text {
+    font-size: 0.8rem;
+    margin-top: 22px;
+  }
+}
+
+/* 🌸 INTRO PAGE */
+.intro {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+  background: linear-gradient(135deg, #ffd1dc, #f8a1c4);
+}
+
+/* 🌸 TITLE */
+.intro-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  color: #7a1e3a;
+  margin-bottom: 20px;
+  animation: fadeDown 1s ease;
+}
+
+.intro-title span {
+  display: inline-block;
+  animation: pulse 2s infinite;
+}
+
+/* 🌸 TEXT */
+.intro-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #5f2a3c;
+  max-width: 420px;
+  margin-bottom: 28px;
+  opacity: 0.9;
+}
+
+/* 🌸 READY */
+.intro-ready {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: #8c3a55;
+  margin-bottom: 18px;
+  opacity: 0.7;
+}
+
+/* 🌸 BUTTON */
+.intro-btn {
+  padding: 14px 42px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #ff6fa5, #ff3d7f);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.intro-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 18px 45px rgba(255, 61, 127, 0.45);
+}
+
+/* 🌸 ANIMATIONS */
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.gallery-subtitle {
+  max-width: 520px;
+  margin: 0 auto 32px;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #6b2b3a;
+  opacity: 0.85;
+}
+
 
