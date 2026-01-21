@@ -1,9 +1,11 @@
 "use client";
 
-import FloatingEffects from "../../components/FloatingEffects";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import FloatingEffects from "../../components/FloatingEffects";
 
 export default function HomePage() {
+  const router = useRouter();
   const FORCE_UNLOCK = false;
 
   const [mounted, setMounted] = useState(false);
@@ -17,21 +19,16 @@ export default function HomePage() {
   } | null>(null);
 
   const [unlocked, setUnlocked] = useState(FORCE_UNLOCK);
-  const [entered, setEntered] = useState(false);
 
-  const galleryRef = useRef<HTMLDivElement | null>(null);
-
-  /* ========================= */
-  /* 🧠 MOUNT GATE */
-  /* ========================= */
-  useEffect(() => {
-    setMounted(true);
-    setBirthday(new Date("2026-01-24T00:00:00"));
-  }, []);
+/* ========================= */
+/* 🧠 MOUNT */
+useEffect(() => {
+  setMounted(true);
+  setBirthday(new Date("2026-01-24T00:00:00"));
+}, []);
 
   /* ========================= */
   /* ⏳ COUNTDOWN */
-  /* ========================= */
   useEffect(() => {
     if (!mounted || FORCE_UNLOCK || !birthday) return;
 
@@ -58,35 +55,18 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, [mounted, birthday, FORCE_UNLOCK]);
 
-  /* ========================= */
-  /* 🎯 BUTTON CLICK */
-  /* ========================= */
-  const handleEnter = () => {
-    setEntered(true);
-
-    setTimeout(() => {
-      galleryRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 200);
-  };
-
   if (!mounted) return null;
 
   return (
     <main className="page-flow">
-      {/* 💕 EFFECTS ONLY BEFORE GALLERY */}
-      <FloatingEffects active={!entered} />
+      <FloatingEffects active/>
 
+      {/* 🔒 LOCKED */}
       {!unlocked && (
         <section className="hero home-bg">
           <h1 className="hero-title">Almost there 💕</h1>
-
           <p className="hero-subtitle">
             Something beautiful is waiting for you…
-            <br />
-            Unlocking in ✨
           </p>
 
           {timeLeft && (
@@ -100,122 +80,131 @@ export default function HomePage() {
         </section>
       )}
 
+      {/* 🔓 UNLOCKED */}
       {unlocked && (
         <section className="hero home-bg fade-in">
-          <div className="emoji-stack">💖 💗 💞 🦋 ✨</div>
+          <div className="emoji-stack floating-emojis">
+            💖 💗 💞 🦋 ✨ 🌸 💫
+          </div>
 
-          <h1 className="birthday-title">
-            Happy Birthday, meri jaan 🎂💕
+          <h1 className="birthday-title glow-text">
+            Happy Birthday, Meri jaan 🎂💖
           </h1>
 
-          <p className="birthday-text">
-            Today isn’t just your birthday —
-            it’s a celebration of the love, warmth,
-            and light you bring into my life.
-            <br />
-            Thank you, my love, for choosing me
-            and for making my world more beautiful
-            just by being in it 🤍
-          </p>
+          <StaggeredTyping />
 
-          {!entered && (
-            <button className="button" onClick={handleEnter}>
-              Enter my heart 💕
-            </button>
-          )}
+          <button
+            className="button pulse-heart"
+            onClick={() => router.push("/game")}
+          >
+            Step into my heart 💞
+          </button>
         </section>
-
-      )}
-
-      {entered && (
-        <>
-          <section ref={galleryRef} className="gallery-section fade-in">
-            <h2 className="section-title">Our Memories💞</h2>
-
-            <p className="gallery-subtitle">
-              Moments frozen in time, yet alive in my heart forever 🤍
-            </p>
-
-            <div className="gallery-grid">
-              <div className="memory-card">
-                <img src="/mine.jpeg" alt="Us together" />
-                <p className="memory-text">
-                  That smile I fall for <br /> every single time 😊✨
-                </p>
-              </div>
-
-              <div className="memory-card">
-                <img src="/i.jpeg" alt="Your smile" />
-                <p className="memory-text">
-                  Two hands, one promise <br /> forever 🤝💍
-                </p>
-              </div>
-
-              <div className="memory-card">
-                <img src="/love.jpeg" alt="Love" />
-                <p className="memory-text">
-                  You, being effortlessly <br /> beautiful 🤍🌸
-                </p>
-              </div>
-
-              <div className="memory-card">
-                <img src="/s.jpeg" alt="You being you" />
-                <p className="memory-text">
-                  A memory I’ll carry <br /> in my heart always 💕
-                </p>
-              </div>
-
-              <div className="memory-card">
-                <img src="/hand.jpeg" alt="Holding hands" />
-                <p className="memory-text">
-                  Love, written quietly <br /> while you sit in my lap, safe and loved 💞
-                </p>
-              </div>
-
-              <div className="memory-card">
-                <img src="/m.jpeg" alt="A special memory" />
-                <p className="memory-text">
-                  The moment I realized <br /> you feel like home 🏡💖
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="letter-section fade-in">
-            <div className="letter-card">
-              <h2>My Love 💖</h2>
-
-              <p>
-                From the moment you walked into my life, nothing stayed the same.
-                You became my calm in chaos, my home in every sense of the word.
-                Your shoulder is where my heart feels safe.
-              </p>
-
-              <p>
-                This gallery may hold memories,
-                but my heart holds *you* —
-                every smile, every tear, every piece of who you are.
-              </p>
-
-              <p>
-                You are unimaginably precious to me.
-                If I hold you close, it’s not possession —
-                it’s fear of a world where I don’t get to love you.
-                I never want to lose you, not in any lifetime.
-              </p>
-
-              <p>
-                One day, I won’t just promise forever —
-                I’ll stand beside you and make you my bride,
-                with the whole world watching and my heart choosing you again 💍✨
-              </p>
-
-              <p className="signature">— Yours, completely and endlessly 💕</p>
-            </div>
-          </section>
-        </>
       )}
     </main>
+  );
+}
+
+/* ========================= */
+/* 💕 STAGGERED TYPING */
+function StaggeredTyping() {
+  const texts = [
+    `Today isn’t just your birthday…
+it’s the day the world became softer 🌷
+brighter ✨
+and infinitely more beautiful —
+because you, exist 💞`,
+
+    `Every heartbeat of mine whispers your name 💗
+Every moment feels warmer with you 🦋
+And every tomorrow…
+is a dream I want to live with you, Baby ✨`,
+
+    `I created this little world for you —
+filled with love, surprises, and pieces of my heart 💕
+Are you ready to step inside, Misha?`,
+  ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  return (
+    <>
+      {texts.map((text, index) => (
+        <TypingText
+          key={index}
+          text={text}
+          isActive={index === activeIndex}
+          onComplete={() =>
+            setTimeout(() => setActiveIndex((i) => i + 1), 400)
+          }
+          className="birthday-text poetic"
+        />
+      ))}
+
+      <div className="soft-divider">♡ ♡ ♡</div>
+    </>
+  );
+}
+
+/* ========================= */
+/* ⌨️ SAFE TYPING + CURSOR */
+function TypingText({
+  text,
+  isActive,
+  onComplete,
+  speed = 45,
+  className = "",
+}: {
+  text: string;
+  isActive: boolean;
+  onComplete: () => void;
+  speed?: number;
+  className?: string;
+}) {
+  const [displayed, setDisplayed] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
+  const indexRef = useRef(0);
+
+  useEffect(() => {
+    if (!isActive) return;
+
+    indexRef.current = 0;
+    setDisplayed("");
+
+    const typing = setInterval(() => {
+      const nextChar = text[indexRef.current];
+
+      if (nextChar === undefined) {
+        clearInterval(typing);
+        setShowCursor(false);
+        onComplete();
+        return;
+      }
+
+      setDisplayed((prev) => prev + nextChar);
+      indexRef.current += 1;
+    }, speed);
+
+    return () => clearInterval(typing);
+  }, [isActive, text, speed, onComplete]);
+
+  useEffect(() => {
+    if (!isActive) return;
+
+    const blink = setInterval(() => {
+      setShowCursor((v) => !v);
+    }, 500);
+
+    return () => clearInterval(blink);
+  }, [isActive]);
+
+  if (!isActive && displayed === "") return null;
+
+  return (
+    <p className={className}>
+      {displayed}
+      {showCursor && <span className="cursor">|</span>}
+    </p>
   );
 }
 
@@ -229,7 +218,6 @@ function FlipUnit({ value, label }: { value: number; label: string }) {
     if (prevValue.current !== value) {
       setAnimate(true);
       prevValue.current = value;
-
       const timeout = setTimeout(() => setAnimate(false), 600);
       return () => clearTimeout(timeout);
     }

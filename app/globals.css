@@ -673,4 +673,154 @@ body {
   opacity: 0.85;
 }
 
+@media (max-height: 700px) {
+  .hero {
+    padding: 56px 18px;
+  }
+}
 
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+.poetic {
+  line-height: 1.8;
+  margin-top: 18px;
+  white-space: pre-line;
+}
+
+.cursor {
+  display: inline-block;
+  margin-left: 2px;
+  opacity: 0.8;
+}
+
+.glow-text {
+  text-shadow: 0 0 18px rgba(255, 105, 180, 0.6);
+}
+
+.soft-divider {
+  margin: 28px 0;
+  font-size: 22px;
+  opacity: 0.7;
+  letter-spacing: 6px;
+}
+
+.pulse-heart {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+.floating-emojis {
+  animation: floatUp 6s ease-in-out infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+
+
+/* 💓 Heart beat */
+.heart {
+  font-size: 1.6rem;
+}
+.heart.beat {
+  animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.25);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+
+/* 🎵 Equalizer */
+.equalizer {
+  display: flex;
+  gap: 3px;
+  align-items: flex-end;
+  height: 18px;
+}
+
+.equalizer span {
+  width: 3px;
+  height: 6px;
+  background: #ff3d7f;
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+.equalizer.active span {
+  animation: bounce 0.8s infinite alternate;
+}
+
+.equalizer.active span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.equalizer.active span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  from {
+    height: 5px;
+  }
+  to {
+    height: 18px;
+  }
+}
+
+/* 🎧 Mini Player */
+.mini-player {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 420px;
+  background: linear-gradient(135deg, #ffd1e8, #ffb3d1);
+  border-radius: 999px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 28px rgba(255, 61, 127, 0.35);
+  z-index: 999;
+}
+
+.mini-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mini-left p {
+  font-size: 0.65rem;
+  opacity: 0.8;
+}
+
+.mini-controls button {
+  border: none;
+  background: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  margin-left: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
