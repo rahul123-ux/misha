@@ -11,27 +11,37 @@ interface MusicState {
   stop: () => void;
 }
 
+let unlocked = false; // 🔓 iOS audio unlock flag
+
 export const useMusicStore = create<MusicState>((set, get) => ({
   audio: null,
   current: null,
   isPlaying: false,
 
-  play: (src, index) => {
+  play: async (src, index) => {
     let { audio } = get();
 
-    // 🎧 create audio only once
     if (!audio) {
       audio = new Audio();
       audio.preload = "auto";
     }
 
-    // ⛔ stop previous
+    // 🔓 iOS AUDIO UNLOCK (first interaction only)
+    if (!unlocked) {
+      try {
+        audio.src = src;
+        await audio.play();
+        audio.pause();
+        audio.currentTime = 0;
+        unlocked = true;
+      } catch {}
+    }
+
     audio.pause();
     audio.src = src;
     audio.currentTime = 0;
     audio.loop = true;
 
-    // 🚀 play when ready (reduces delay)
     const playAudio = () => {
       audio!.play().catch(() => {});
       set({ isPlaying: true, current: index });
@@ -40,7 +50,7 @@ export const useMusicStore = create<MusicState>((set, get) => ({
     if (audio.readyState >= 3) {
       playAudio();
     } else {
-      audio.oncanplay = playAudio;
+      audio.oncanplaythrough = playAudio;
       audio.load();
     }
 
@@ -59,19 +69,19 @@ export const useMusicStore = create<MusicState>((set, get) => ({
     set({ isPlaying: true });
   },
 
- stop: () => {
-  const { audio } = get();
+  stop: () => {
+    const { audio } = get();
 
-  if (audio) {
-    audio.oncanplay = null;   // 🔥 cancel pending play
-    audio.pause();
-    audio.currentTime = 0;
-    audio.loop = false;
-  }
+    if (audio) {
+      audio.oncanplaythrough = null;
+      audio.pause();
+      audio.currentTime = 0;
+      audio.loop = false;
+    }
 
-  set({
-    isPlaying: false,
-    current: null,           // ✅ hides mini player
-  });
-},
+    set({
+      isPlaying: false,
+      current: null,
+    });
+  },
 }));

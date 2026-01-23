@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useMusicStore } from "../store/musicStore";
-import { useEffect } from "react";
 
 interface Song {
   title: string;
@@ -36,18 +35,16 @@ export default function MusicPage() {
   const router = useRouter();
   const { play, pause, resume, stop, current, isPlaying } = useMusicStore();
 
-  // ✅ PRELOAD SONGS (must be inside component)
-  useEffect(() => {
-    songs.forEach((song) => {
-      const audio = new Audio(song.src);
-      audio.preload = "auto";
-    });
-  }, []);
-
   const handleToggle = (song: Song, index: number) => {
-    if (current === index && isPlaying) pause();
-    else if (current === index && !isPlaying) resume();
-    else play(song.src, index);
+    if (current === index && isPlaying) {
+      pause();
+    } else if (current === index && !isPlaying) {
+      resume();
+    } else {
+      // only set current, let audio decide isPlaying
+      useMusicStore.setState({ current: index });
+      play(song.src, index);
+    }
   };
 
   const currentSong = current !== null ? songs[current] : null;
@@ -143,7 +140,6 @@ export default function MusicPage() {
         <button
           className="button"
           onClick={() => {
-            // stop(); // optional
             router.push("/why");
           }}
         >
@@ -161,11 +157,15 @@ export default function MusicPage() {
             </div>
           </div>
 
-          <div className={`equalizer ${isPlaying ? "active" : ""}`}>
+          <div
+            key={`${current}-${isPlaying}`}
+            className={`equalizer ${isPlaying ? "active" : ""}`}
+          >
             <span />
             <span />
             <span />
           </div>
+
 
           <div className="mini-controls">
             <button onClick={() => (isPlaying ? pause() : resume())}>
