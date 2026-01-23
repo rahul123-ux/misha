@@ -1,6 +1,17 @@
 import { create } from "zustand";
 
-export const useMusicStore = create((set, get) => ({
+type MusicStore = {
+  audio: HTMLAudioElement | null;
+  current: number | null;
+  isPlaying: boolean;
+
+  play: (src: string, index: number) => void;
+  pause: () => void;
+  resume: () => void;
+  stop: () => void;
+};
+
+export const useMusicStore = create<MusicStore>((set, get) => ({
   audio: null,
   current: null,
   isPlaying: false,

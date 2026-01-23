@@ -28,7 +28,10 @@ export default function MusicPage() {
   const router = useRouter();
   const { play, pause, resume, stop, current, isPlaying } = useMusicStore();
 
-  const handleToggle = (song, index) => {
+const handleToggle = (
+  song: { title: string; subtitle: string; src: string; color: string },
+  index: number
+) => {
     if (current === index && isPlaying) pause();
     else if (current === index && !isPlaying) resume();
     else play(song.src, index);
