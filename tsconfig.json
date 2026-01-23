@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "lib/stores/musicStore.ts"  ],
   "exclude": ["node_modules"]
 }

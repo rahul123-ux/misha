@@ -2,18 +2,16 @@
 
 import { useRouter } from "next/navigation";
 import { useMusicStore } from "../store/musicStore";
-
 import { useEffect } from "react";
 
-useEffect(() => {
-  songs.forEach((song) => {
-    const audio = new Audio(song.src);
-    audio.preload = "auto";
-  });
-}, []);
+interface Song {
+  title: string;
+  subtitle: string;
+  src: string;
+  color: string;
+}
 
-
-const songs = [
+const songs: Song[] = [
   {
     title: "Tu",
     subtitle: "I want you only 🤍",
@@ -38,10 +36,15 @@ export default function MusicPage() {
   const router = useRouter();
   const { play, pause, resume, stop, current, isPlaying } = useMusicStore();
 
-const handleToggle = (
-  song: { title: string; subtitle: string; src: string; color: string },
-  index: number
-) => {
+  // ✅ PRELOAD SONGS (must be inside component)
+  useEffect(() => {
+    songs.forEach((song) => {
+      const audio = new Audio(song.src);
+      audio.preload = "auto";
+    });
+  }, []);
+
+  const handleToggle = (song: Song, index: number) => {
     if (current === index && isPlaying) pause();
     else if (current === index && !isPlaying) resume();
     else play(song.src, index);
@@ -57,17 +60,15 @@ const handleToggle = (
         flexDirection: "column",
       }}
     >
-      {/* MAIN CONTENT */}
       <section
         className="hero home-bg"
         style={{
           flex: 1,
           justifyContent: "flex-start",
           paddingTop: "20px",
-          paddingBottom: currentSong ? "140px" : "32px", // 👈 space for player
+          paddingBottom: currentSong ? "140px" : "32px",
         }}
       >
-        {/* HEADER */}
         <div style={{ marginBottom: "12px" }}>
           <h1 className="hero-title">Songs That Feel Like You 🎶</h1>
           <p
@@ -82,13 +83,12 @@ const handleToggle = (
           </p>
         </div>
 
-        {/* SONG LIST */}
         <div
           style={{
             maxWidth: "360px",
             width: "100%",
             display: "grid",
-            gap: "10px", // 👈 reduced spacing
+            gap: "10px",
             marginBottom: "24px",
           }}
         >
@@ -127,7 +127,8 @@ const handleToggle = (
                   height: "40px",
                   borderRadius: "50%",
                   border: "none",
-                  background: "linear-gradient(135deg,#ff6fae,#ff3d7f)",
+                  background:
+                    "linear-gradient(135deg,#ff6fae,#ff3d7f)",
                   color: "white",
                   fontSize: "1.05rem",
                   cursor: "pointer",
@@ -139,12 +140,10 @@ const handleToggle = (
           ))}
         </div>
 
-        {/* NEXT BUTTON */}
         <button
           className="button"
           onClick={() => {
-            // 💕 you can choose:
-            // stop(); // ← uncomment if you want music to stop
+            // stop(); // optional
             router.push("/why");
           }}
         >
@@ -152,7 +151,6 @@ const handleToggle = (
         </button>
       </section>
 
-      {/* MINI MUSIC PLAYER (FIXED) */}
       {currentSong && (
         <div className="mini-player">
           <div className="mini-left">

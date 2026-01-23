@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 /* ================= MEMORY DATA ================= */
 
@@ -38,21 +37,52 @@ export default function ThoughtsPage() {
 
   const [mode, setMode] = useState<"reader" | "polaroid">("reader");
   const [index, setIndex] = useState(0);
+  const [polaroidsReady, setPolaroidsReady] = useState(false);
 
-  /* ===== Preload polaroids early ===== */
+  const textRef = useRef<HTMLDivElement | null>(null);
+  const touchStartX = useRef(0);
+
+  /* ================= PRELOAD POLAROIDS ================= */
+
   useEffect(() => {
+    let loaded = 0;
     polaroidImages.forEach((src) => {
-      const img = new window.Image();
+      const img = new Image();
       img.src = src;
+      img.onload = () => {
+        loaded++;
+        if (loaded === polaroidImages.length) {
+          setPolaroidsReady(true);
+        }
+      };
     });
   }, []);
 
-  /* ===== Text Scroll Ref ===== */
-  const textRef = useRef<HTMLDivElement | null>(null);
+  /* ================= RESET TEXT SCROLL ================= */
 
   useEffect(() => {
-    if (textRef.current) textRef.current.scrollTop = 0;
+    if (textRef.current) {
+      textRef.current.scrollTop = 0;
+    }
   }, [index]);
+
+  /* ================= SWIPE SUPPORT ================= */
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+
+    if (diff > 60 && index < memories.length - 1) {
+      setIndex((i) => i + 1);
+    }
+
+    if (diff < -60 && index > 0) {
+      setIndex((i) => i - 1);
+    }
+  };
 
   /* ================= POLAROID PAGE ================= */
 
@@ -62,21 +92,17 @@ export default function ThoughtsPage() {
         <h1>Some of your moments 🤍</h1>
         <p className="subtitle">Little memories, softly pressed into time.</p>
 
-        <div className="polaroid-grid">
-          {polaroidImages.map((img, i) => (
-            <div key={i} className="polaroid romantic">
-              <Image
-                src={img}
-                alt="polaroid"
-                width={300}
-                height={380}
-                priority
-                className="polaroid-img"
-                style={{ width: "100%", height: "auto", objectFit: "cover" }}
-              />
-            </div>
-          ))}
-        </div>
+        {!polaroidsReady && <div className="polaroid-loader" />}
+
+        {polaroidsReady && (
+          <div className="polaroid-grid fade-in">
+            {polaroidImages.map((img, i) => (
+              <div key={i} className="polaroid romantic">
+                <img src={img} alt="polaroid" />
+              </div>
+            ))}
+          </div>
+        )}
 
         <button className="next-btn" onClick={() => router.push("/promise")}>
           Continue ✨
@@ -88,31 +114,61 @@ export default function ThoughtsPage() {
   /* ================= MEMORY READER ================= */
 
   return (
-    <main className="memory-page fade">
-      <div className="memory-image-box">
-        <Image
-          src={memories[index].img}
-          alt="memory"
-          width={400}
-          height={520}
-          priority
-          style={{ width: "100%", height: "auto", objectFit: "cover" }}
-        />
-      </div>
+    <main
+      className="memory-page fade"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      {/* IMAGE */}
+      {/* IMAGE */}
+<div className="memory-image-box">
+  {/* FLOATING HEARTS & BUTTERFLIES */}
+  <div className="floating-container">
+    {Array.from({ length: 8 }).map((_, i) => (
+      <span
+        key={i}
+        className={`floating ${i % 2 === 0 ? "heart" : "butterfly"}`}
+        style={{
+          left: `${Math.random() * 100}%`,
+          fontSize: `${14 + Math.random() * 10}px`,
+          animationDuration: `${14 + Math.random() * 6}s`,
+        }}
+      >
+        {i % 2 === 0 ? "🤍" : "🦋"}
+      </span>
+    ))}
+  </div>
 
+  {/* MEMORY IMAGE (smooth fade) */}
+  <img
+    key={memories[index].img}
+    src={memories[index].img}
+    alt="memory"
+    className="memory-fade"
+  />
+</div>
+
+
+      {/* TEXT */}
       <div className="memory-text-scroll" ref={textRef}>
         <p>{memories[index].text}</p>
       </div>
 
+      {/* CONTROLS */}
       <div className="memory-controls">
-        <button onClick={() => setIndex((i) => Math.max(i - 1, 0))} disabled={index === 0}>
+        <button
+          disabled={index === 0}
+          onClick={() => setIndex((i) => i - 1)}
+        >
           ⬅ Back
         </button>
 
         {index === memories.length - 1 ? (
-          <button onClick={() => setMode("polaroid")}>View memories 📸</button>
+          <button onClick={() => setMode("polaroid")}>
+            View memories 📸
+          </button>
         ) : (
-          <button onClick={() => setIndex((i) => Math.min(i + 1, memories.length - 1))}>
+          <button onClick={() => setIndex((i) => i + 1)}>
             Next ➜
           </button>
         )}

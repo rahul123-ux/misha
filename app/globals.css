@@ -809,18 +809,6 @@ body {
   opacity: 0.6;
 }
 
-.equalizer.active span {
-  animation: bounce 0.8s infinite alternate;
-}
-
-.equalizer.active span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.equalizer.active span:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
 @keyframes bounce {
   from {
     height: 5px;
@@ -901,13 +889,8 @@ body {
   max-height: 100%;
   object-fit: contain;
   border-radius: 18px;
-  opacity: 0;
-  transition: opacity 0.6s ease;
 }
 
-.memory-image-box img.show {
-  opacity: 1;
-}
 
 /* Soft loader */
 .image-loader {
@@ -947,6 +930,7 @@ body {
   color: #333;
 }
 
+
 /* Controls */
 .memory-controls {
   display: flex;
@@ -967,13 +951,80 @@ body {
   color: white;
   background: linear-gradient(135deg, #ff6fae, #ff3d7f);
 }
+
+/* Polaroid grid entrance */
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Polaroid loading placeholder */
+.polaroid-loader {
+  height: 240px;
+  display: grid;
+  place-items: center;
+  opacity: 0.6;
+}
+
+/* ========================= */
+/* 💖 MEMORY IMAGE – TRUE SMOOTH FADE */
+/* ========================= */
+
+.memory-image-box {
+  height: 38vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.memory-image-box img {
+  max-width: 92%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 18px;
+}
+
+/* smooth fade-in on mount */
+.memory-fade {
+  animation: fadeInSoft 0.8s ease;
+}
+
+@keyframes fadeInSoft {
+  from {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+
+
+
 /* ========================= */
 /* 📸 POLAROID – ROMANTIC */
 /* ========================= */
 
 .polaroid-root {
   height: 100svh;
-  background: radial-gradient(circle at top, #fff0f6, #ffdbe9, #f8c1d9);
+  background: radial-gradient(circle at top,
+      #fff0f6,
+      #ffdbe9,
+      #f8c1d9);
   padding: 20px 14px;
   text-align: center;
   display: flex;
@@ -991,6 +1042,7 @@ body {
   color: rgba(122, 46, 74, 0.7);
   margin-bottom: 18px;
 }
+
 
 .polaroid-grid {
   flex: 1;
@@ -1011,7 +1063,6 @@ body {
     inset 0 0 0 1px rgba(255, 182, 213, 0.4);
   transform: rotate(-2deg);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
-  overflow: hidden;
 }
 
 .polaroid.romantic:nth-child(even) {
@@ -1020,19 +1071,15 @@ body {
 
 .polaroid.romantic:hover {
   transform: rotate(0deg) translateY(-6px);
-  box-shadow: 0 28px 52px rgba(255, 111, 174, 0.5);
+  box-shadow:
+    0 28px 52px rgba(255, 111, 174, 0.5);
 }
 
-.polaroid-img {
+.polaroid.romantic img {
+  width: 100%;
   border-radius: 14px;
-  opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.polaroid-img[data-loaded="true"] {
+  display: block;
   opacity: 1;
-  transform: scale(1);
 }
 
 .next-btn {

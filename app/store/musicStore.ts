@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type MusicStore = {
+interface MusicState {
   audio: HTMLAudioElement | null;
   current: number | null;
   isPlaying: boolean;
@@ -9,49 +9,69 @@ type MusicStore = {
   pause: () => void;
   resume: () => void;
   stop: () => void;
-};
+}
 
-export const useMusicStore = create<MusicStore>((set, get) => ({
+export const useMusicStore = create<MusicState>((set, get) => ({
   audio: null,
   current: null,
   isPlaying: false,
 
   play: (src, index) => {
-    const { audio } = get();
+    let { audio } = get();
 
-    if (audio) {
-      audio.pause();
+    // 🎧 create audio only once
+    if (!audio) {
+      audio = new Audio();
+      audio.preload = "auto";
     }
 
-    const newAudio = new Audio(src);
-    newAudio.loop = true;
-    newAudio.play();
+    // ⛔ stop previous
+    audio.pause();
+    audio.src = src;
+    audio.currentTime = 0;
+    audio.loop = true;
 
-    set({
-      audio: newAudio,
-      current: index,
-      isPlaying: true,
-    });
+    // 🚀 play when ready (reduces delay)
+    const playAudio = () => {
+      audio!.play().catch(() => {});
+      set({ isPlaying: true, current: index });
+    };
+
+    if (audio.readyState >= 3) {
+      playAudio();
+    } else {
+      audio.oncanplay = playAudio;
+      audio.load();
+    }
+
+    set({ audio });
   },
 
   pause: () => {
     const { audio } = get();
-    if (audio) audio.pause();
+    audio?.pause();
     set({ isPlaying: false });
   },
 
   resume: () => {
     const { audio } = get();
-    if (audio) audio.play();
+    audio?.play().catch(() => {});
     set({ isPlaying: true });
   },
 
-  stop: () => {
-    const { audio } = get();
-    if (audio) {
-      audio.pause();
-      audio.currentTime = 0;
-    }
-    set({ isPlaying: false, current: null });
-  },
+ stop: () => {
+  const { audio } = get();
+
+  if (audio) {
+    audio.oncanplay = null;   // 🔥 cancel pending play
+    audio.pause();
+    audio.currentTime = 0;
+    audio.loop = false;
+  }
+
+  set({
+    isPlaying: false,
+    current: null,           // ✅ hides mini player
+  });
+},
 }));
