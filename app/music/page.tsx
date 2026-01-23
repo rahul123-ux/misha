@@ -3,6 +3,16 @@
 import { useRouter } from "next/navigation";
 import { useMusicStore } from "../store/musicStore";
 
+import { useEffect } from "react";
+
+useEffect(() => {
+  songs.forEach((song) => {
+    const audio = new Audio(song.src);
+    audio.preload = "auto";
+  });
+}, []);
+
+
 const songs = [
   {
     title: "Tu",
@@ -19,7 +29,7 @@ const songs = [
   {
     title: "Ishq",
     subtitle: "I am in love with you 💕",
-    src: "/music/Ishq.mp3",
+    src: "/music/ishq.mp3",
     color: "#f1ecff",
   },
 ];

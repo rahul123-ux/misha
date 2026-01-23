@@ -967,17 +967,13 @@ body {
   color: white;
   background: linear-gradient(135deg, #ff6fae, #ff3d7f);
 }
-
 /* ========================= */
 /* 📸 POLAROID – ROMANTIC */
 /* ========================= */
 
 .polaroid-root {
   height: 100svh;
-  background: radial-gradient(circle at top,
-      #fff0f6,
-      #ffdbe9,
-      #f8c1d9);
+  background: radial-gradient(circle at top, #fff0f6, #ffdbe9, #f8c1d9);
   padding: 20px 14px;
   text-align: center;
   display: flex;
@@ -995,7 +991,6 @@ body {
   color: rgba(122, 46, 74, 0.7);
   margin-bottom: 18px;
 }
-
 
 .polaroid-grid {
   flex: 1;
@@ -1016,6 +1011,7 @@ body {
     inset 0 0 0 1px rgba(255, 182, 213, 0.4);
   transform: rotate(-2deg);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
 }
 
 .polaroid.romantic:nth-child(even) {
@@ -1024,20 +1020,19 @@ body {
 
 .polaroid.romantic:hover {
   transform: rotate(0deg) translateY(-6px);
-  box-shadow:
-    0 28px 52px rgba(255, 111, 174, 0.5);
+  box-shadow: 0 28px 52px rgba(255, 111, 174, 0.5);
 }
 
-.polaroid.romantic img {
-  width: 100%;
+.polaroid-img {
   border-radius: 14px;
-  display: block;
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transform: scale(0.96);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.polaroid.romantic img[loading="lazy"] {
+.polaroid-img[data-loaded="true"] {
   opacity: 1;
+  transform: scale(1);
 }
 
 .next-btn {
