@@ -51,7 +51,7 @@ export default function WhyPage() {
           ))}
         </div>
 
-        <button className="button" onClick={() => router.push("/promise")}>
+        <button className="button" onClick={() => router.push("/thoughts")}>
           Next ✨
         </button>
       </section>

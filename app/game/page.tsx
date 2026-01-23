@@ -243,11 +243,6 @@ export default function GamePage() {
                         </div>
                     </div>
                 )}
-
-                {/* 🎵 AUDIO */}
-                <audio ref={audioRef} loop>
-                    <source src="/soft-love.mp3" type="audio/mpeg" />
-                </audio>
             </section>
         </main>
     );
